@@ -1,0 +1,23 @@
+# Ignore editor and OS files
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Docker and containers
+docker-compose.override.yml
+.env
+**/.env
+**/docker-compose.override.yml
+
+# Logs and temp
+*.log
+*.tmp
+*.temp
+*.bak
+
+# Build output
+bin/
+obj/
+
+# Ignore Git metadata in subdirectories
+.git/

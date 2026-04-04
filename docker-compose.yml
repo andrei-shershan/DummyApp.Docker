@@ -1,0 +1,84 @@
+version: '3.9'
+
+services:
+  traefik:
+    image: traefik:latest
+    container_name: traefik
+    command:
+      - --api.dashboard=true
+      - --api.insecure=true
+      - --entrypoints.web.address=:80
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --log.level=INFO
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - web
+
+  api-gateway:
+    build:
+      context: ../DummyApp.ApiGateway
+      dockerfile: Dockerfile
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api-gateway.rule=Host(`apigateway.dummy.localhost`)"
+      - "traefik.http.routers.api-gateway.entrypoints=web"
+      - "traefik.http.services.api-gateway.loadbalancer.server.port=8080"
+    networks:
+      - web
+
+  bff:
+    build:
+      context: ../DummyApp.BFF
+      dockerfile: Dockerfile
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.bff.rule=Host(`bff.dummy.localhost`)"
+      - "traefik.http.routers.bff.entrypoints=web"
+      - "traefik.http.services.bff.loadbalancer.server.port=8080"
+    networks:
+      - web
+
+  identity:
+    build:
+      context: ../DummyApp.Identity
+      dockerfile: Dockerfile
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.identity.rule=Host(`identity.dummy.localhost`)"
+      - "traefik.http.routers.identity.entrypoints=web"
+      - "traefik.http.services.identity.loadbalancer.server.port=8080"
+    networks:
+      - web
+
+  storage:
+    build:
+      context: ../DummyApp.StorageService
+      dockerfile: Dockerfile
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.storage.rule=Host(`storage.dummy.localhost`)"
+      - "traefik.http.routers.storage.entrypoints=web"
+      - "traefik.http.services.storage.loadbalancer.server.port=8080"
+    networks:
+      - web
+
+  frontend:
+    build:
+      context: ../DummyApp.FE/dummyappfe
+      dockerfile: Dockerfile
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=Host(`fe.dummy.localhost`)"
+      - "traefik.http.routers.frontend.entrypoints=web"
+      - "traefik.http.services.frontend.loadbalancer.server.port=80"
+    networks:
+      - web
+
+networks:
+  web:
+    driver: bridge
