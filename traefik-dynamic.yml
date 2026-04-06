@@ -1,0 +1,4 @@
+tls:
+  certificates:
+    - certFile: /etc/traefik/certs/dummy.crt
+      keyFile: /etc/traefik/certs/dummy.key
