@@ -31,12 +31,34 @@ services:
           - bff.dummy.localhost
           - fe.dummy.localhost
 
+  mysql:
+    image: mysql:8.0
+    container_name: dummyapp_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-secret}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-dummy_identity}
+      MYSQL_USER: ${MYSQL_USER:-dummyapp}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-secret}
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - web
+
   api-gateway:
     build:
       context: ../DummyApp.ApiGateway
       dockerfile: Dockerfile
-    environment:
-      - ReverseProxy__TrustAllProxies=true
+    env_file:
+      - ./.env
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.api-gateway.rule=Host(`apigateway.dummy.localhost`)"
@@ -50,8 +72,8 @@ services:
     build:
       context: ../DummyApp.BFF
       dockerfile: Dockerfile
-    environment:
-      - ReverseProxy__TrustAllProxies=true
+    env_file:
+      - ./.env
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.bff.rule=Host(`bff.dummy.localhost`)"
@@ -65,9 +87,10 @@ services:
     build:
       context: ../DummyApp.Identity
       dockerfile: Dockerfile
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ReverseProxy__TrustAllProxies=true
+    env_file:
+      - ./.env
+    depends_on:
+      - mysql
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.identity.rule=Host(`identity.dummy.localhost`)"
@@ -81,8 +104,8 @@ services:
     build:
       context: ../DummyApp.StorageService
       dockerfile: Dockerfile
-    environment:
-      - ReverseProxy__TrustAllProxies=true
+    env_file:
+      - ./.env
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.storage.rule=Host(`storage.dummy.localhost`)"
@@ -108,3 +131,6 @@ services:
 networks:
   web:
     driver: bridge
+
+volumes:
+  mysql_data:
