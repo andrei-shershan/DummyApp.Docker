@@ -119,6 +119,8 @@ services:
     build:
       context: ../DummyApp.FE/dummyappfe
       dockerfile: Dockerfile
+    env_file:
+      - ./.env
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.frontend.rule=Host(`fe.dummy.localhost`)"
