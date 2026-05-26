@@ -30,6 +30,7 @@ services:
           - identity.dummy.localhost
           - bff.dummy.localhost
           - fe.dummy.localhost
+          - blobservice.dummy.localhost
 
   mysql:
     image: mysql:8.0
@@ -118,6 +119,21 @@ services:
       - "traefik.http.routers.storage.entrypoints=websecure"
       - "traefik.http.routers.storage.tls=true"
       - "traefik.http.services.storage.loadbalancer.server.port=8080"
+    networks:
+      - web
+
+  blobservice:
+    build:
+      context: ../DummyApp.BlobService
+      dockerfile: Dockerfile
+    env_file:
+      - ./.env
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.blobservice.rule=Host(`blobservice.dummy.localhost`)"
+      - "traefik.http.routers.blobservice.entrypoints=websecure"
+      - "traefik.http.routers.blobservice.tls=true"
+      - "traefik.http.services.blobservice.loadbalancer.server.port=8080"
     networks:
       - web
 
