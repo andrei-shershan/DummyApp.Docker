@@ -110,7 +110,8 @@ services:
     env_file:
       - ./.env
     environment:
-      Database__ConnectionString: "server=mysql;port=3306;database=dummy_db;user=dummyapp;password=secret"
+      Infrastructure__Databases__Storage__UseInMemory: "false"
+      Infrastructure__Databases__Storage__ConnectionString: "server=mysql;port=3306;database=dummy_db;user=dummyapp;password=secret"
     depends_on:
       - mysql
     labels:
