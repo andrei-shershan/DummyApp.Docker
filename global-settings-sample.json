@@ -1,0 +1,151 @@
+{
+    // =============================================================================
+    // GLOBAL SETTINGS SAMPLE
+    // This file shows the complete merged view of all service appsettings.
+    // Each service uses only the keys it needs from this structure.
+    // Env var overrides follow ASP.NET Core convention: Section__Key=value
+    // e.g. IdentityServer__Authority=https://... overrides IdentityServer:Authority
+    //
+    // NOTE: ReverseProxy:TrustAllProxies and KeyVault:Url intentionally stay
+    // at root level because they are set via env vars in Docker/.env and
+    // Azure App Service — changing their paths would require updating
+    // ReverseProxy__TrustAllProxies env vars across all environments.
+    // =============================================================================
+    "IdentityServer": {
+        // The public-facing URL of the Identity server (used by all services)
+        "Authority": "https://identity.dummy.localhost",
+        // JWT audiences registered in OpenIddict.
+        // Identity reads this full list for RegisterAudiences().
+        // Each individual service declares only its own singular Audience in its own appsettings.
+        "Audiences": [ "DummyApp.StorageService" ],
+        "OidcClients": {
+            // BFF uses Authorization Code + PKCE flow (browser-facing)
+            "BFF": {
+                "ClientId": "bff-client",
+                "ClientSecret": "secret",
+                "RedirectUri": "https://bff.dummy.localhost/signin-oidc",
+                "PostLogoutRedirectUri": "https://bff.dummy.localhost/signout-callback-oidc",
+                // Docker-internal metadata URL for BFF→Identity server-to-server calls.
+                // Overrides the public Authority for discovery document fetching inside Docker.
+                // Set via env var: IdentityServer__OidcClients__BFF__MetadataAddress
+                "MetadataAddress": "http://identity:8080/.well-known/openid-configuration"
+            },
+            // ApiGateway uses Client Credentials flow (backend-to-backend)
+            "ApiGateway": {
+                "ClientId": "storage-client",
+                "ClientSecret": "storage-secret",
+                "DisplayName": "Storage service client"
+            }
+        }
+    },
+    "Services": {
+        // BaseUrls for all services — used for HttpClient configuration and CORS
+        "Frontend": {
+            "BaseUrl": "https://fe.dummy.localhost"
+        },
+        "BFF": {
+            "BaseUrl": "https://bff.dummy.localhost"
+        },
+        "ApiGateway": {
+            "BaseUrl": "https://apigateway.dummy.localhost"
+        },
+        "StorageService": {
+            "BaseUrl": "https://storage.dummy.localhost",
+            // This service's own JWT audience — used by StorageService for ValidAudience token validation.
+            // A new service gets its own Audience entry here; add the value to IdentityServer:Audiences too.
+            "Audience": "DummyApp.StorageService"
+        },
+        "BlobService": {
+            "BaseUrl": "https://blobservice.dummy.localhost"
+        },
+        "Identity": {
+            "BaseUrl": "https://identity.dummy.localhost"
+        }
+    },
+    "Infrastructure": {
+        "Databases": {
+            "Identity": {
+                "UseInMemory": false,
+                "ConnectionString": "server=mysql;port=3306;database=dummy_identity;user=dummyapp;password=secret"
+            },
+            "Storage": {
+                "UseInMemory": false,
+                "ConnectionString": "server=mysql;port=3306;database=dummy_db;user=dummyapp;password=secret"
+            }
+        }
+    },
+    // Identity service seeding — only read by DummyApp.Identity
+    "FeatureFlags": {
+        "DefaultRolesSeed": false,
+        "DefaultUsersSeed": false
+    },
+    "DefaultUsers": [
+        {
+            "Email": "admin@dummy.localhost",
+            "Password": "Admin123!",
+            "Role": "Admin",
+            "FirstName": "Admin",
+            "LastName": "User"
+        },
+        {
+            "Email": "moderator@dummy.localhost",
+            "Password": "Moderator123!",
+            "Role": "Moderator",
+            "FirstName": "Moderator",
+            "LastName": "User"
+        },
+        {
+            "Email": "customer@dummy.localhost",
+            "Password": "Customer123!",
+            "Role": "Customer",
+            "FirstName": "Customer",
+            "LastName": "User"
+        },
+        {
+            "Email": "creator@dummy.localhost",
+            "Password": "Creator123!",
+            "Role": "Creator",
+            "FirstName": "Creator",
+            "LastName": "User"
+        }
+    ],
+    // BFF-only: CORS policy for browser requests from the frontend
+    "Cors": {
+        "AllowedOrigins": [
+            "https://fe.dummy.localhost"
+        ]
+    },
+    // YARP reverse proxy routing config — only read by DummyApp.BFF
+    // TrustAllProxies: shared across all services, set via env var in Docker/Azure
+    "ReverseProxy": {
+        "TrustAllProxies": false,
+        "Routes": {
+            "api_route": {
+                "ClusterId": "api_cluster",
+                "Match": {
+                    "Path": "/api/{**catch-all}"
+                }
+            }
+        },
+        "Clusters": {
+            "api_cluster": {
+                "Destinations": {
+                    "api1": {
+                        "Address": "https://apigateway.dummy.localhost/"
+                    }
+                }
+            }
+        }
+    },
+    // Azure Key Vault — set via env var: KeyVault__Url=https://...
+    "KeyVault": {
+        "Url": ""
+    },
+    "Logging": {
+        "LogLevel": {
+            "Default": "Information",
+            "Microsoft.AspNetCore": "Warning"
+        }
+    },
+    "AllowedHosts": "*"
+}
