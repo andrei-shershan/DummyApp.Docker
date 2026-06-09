@@ -141,6 +141,12 @@
     "KeyVault": {
         "Url": ""
     },
+    "BlobStorage": {
+        "ConnectionString": "DefaultEndpointsProtocol=https;AccountName=<account>;AccountKey=<key>;EndpointSuffix=core.windows.net",
+        "ContainerName": "artworks",
+        "StorageUrl": "https://<storage-account>.blob.core.windows.net"
+    },
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "Logging": {
         "LogLevel": {
             "Default": "Information",

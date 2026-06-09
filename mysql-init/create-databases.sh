@@ -1,4 +1,4 @@
-#!/bin/bash
+﻿#!/bin/bash
 set -e
 
 # Create all databases from MYSQL_DATABASES or fallback to MYSQL_DATABASE.
@@ -24,3 +24,4 @@ done
 if [ -n "$MYSQL_USER" ]; then
   mysql --protocol=socket -uroot -p"$MYSQL_ROOT_PASSWORD" -e "FLUSH PRIVILEGES;"
 fi
+
