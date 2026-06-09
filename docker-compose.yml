@@ -39,7 +39,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-secret}
       MYSQL_DATABASE: ${MYSQL_DATABASE:-dummy_identity}
-      MYSQL_DATABASES: ${MYSQL_DATABASES:-dummy_identity}
+      MYSQL_DATABASES: ${MYSQL_DATABASES:-dummy_identity,dummy_db}
       MYSQL_USER: ${MYSQL_USER:-dummyapp}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD:-secret}
     ports:
@@ -109,9 +109,6 @@ services:
       dockerfile: Dockerfile
     env_file:
       - ./.env
-    environment:
-      Infrastructure__Databases__Storage__UseInMemory: "false"
-      Infrastructure__Databases__Storage__ConnectionString: "server=mysql;port=3306;database=dummy_db;user=dummyapp;password=secret"
     depends_on:
       - mysql
     labels:
