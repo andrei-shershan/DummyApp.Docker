@@ -17,7 +17,9 @@
         // JWT audiences registered in OpenIddict.
         // Identity reads this full list for RegisterAudiences().
         // Each individual service declares only its own singular Audience in its own appsettings.
-        "Audiences": [ "DummyApp.StorageService" ],
+        "Audiences": [
+            "DummyApp.StorageService"
+        ],
         "OidcClients": {
             // BFF uses Authorization Code + PKCE flow (browser-facing)
             "BFF": {
@@ -142,9 +144,9 @@
         "Url": ""
     },
     "BlobStorage": {
-        "ConnectionString": "DefaultEndpointsProtocol=https;AccountName=<account>;AccountKey=<key>;EndpointSuffix=core.windows.net",
+        "ConnectionString": "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNoGVdrW1Z4+DA3Gg9rb+v3pQ+uK2Z0FY=;BlobEndpoint=http://azurite:10000/devstoreaccount1;",
         "ContainerName": "artworks",
-        "StorageUrl": "https://<storage-account>.blob.core.windows.net"
+        "StorageUrl": "http://localhost:10000/devstoreaccount1"
     },
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "Logging": {
