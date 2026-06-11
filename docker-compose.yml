@@ -56,6 +56,27 @@ services:
     networks:
       - web
 
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite
+    container_name: dummyapp_azurite
+    restart: unless-stopped
+    command:
+      azurite
+        --location /data
+        --blobHost 0.0.0.0 
+        --queueHost 0.0.0.0 
+        --tableHost 0.0.0.0
+    environment:
+      AZURITE_ACCOUNTS: "devstoreaccount1:Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw=="
+    ports:
+      - "10000:10000"
+      - "10001:10001"
+      - "10002:10002"
+    volumes:
+      - azurite_data:/data
+    networks:
+      - web
+
   api-gateway:
     build:
       context: ../DummyApp.ApiGateway
@@ -126,6 +147,8 @@ services:
       dockerfile: Dockerfile
     env_file:
       - ./.env
+    depends_on:
+      - azurite
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.blobservice.rule=Host(`blobservice.dummy.localhost`)"
@@ -156,3 +179,4 @@ networks:
 
 volumes:
   mysql_data:
+  azurite_data:
