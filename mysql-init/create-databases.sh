@@ -24,4 +24,3 @@ done
 if [ -n "$MYSQL_USER" ]; then
   mysql --protocol=socket -uroot -p"$MYSQL_ROOT_PASSWORD" -e "FLUSH PRIVILEGES;"
 fi
-
