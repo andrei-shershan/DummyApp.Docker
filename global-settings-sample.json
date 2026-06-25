@@ -60,7 +60,10 @@
         "BlobService": {
             "BaseUrl": "https://blobservice.dummy.localhost"
         },
-        "Identity": {
+        "EmailService": {
+            "BaseUrl": "https://emailservice.dummy.localhost"
+        },
+        "IdentityService": {
             "BaseUrl": "https://identity.dummy.localhost"
         }
     },
@@ -147,6 +150,10 @@
         "ConnectionString": "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNoGVdrW1Z4+DA3Gg9rb+v3pQ+uK2Z0FY=;BlobEndpoint=http://azurite:10000/devstoreaccount1;",
         "ContainerName": "artworks",
         "StorageUrl": "http://localhost:10000/devstoreaccount1",
+        "SecretKey": "123123"
+    },
+    "EmailService":
+    {
         "SecretKey": "123123"
     },
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
