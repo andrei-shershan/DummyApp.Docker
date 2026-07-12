@@ -40,7 +40,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-secret}
       MYSQL_DATABASE: ${MYSQL_DATABASE:-dummy_identity}
-      MYSQL_DATABASES: ${MYSQL_DATABASES:-dummy_identity,dummy_db}
       MYSQL_USER: ${MYSQL_USER:-dummyapp}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD:-secret}
     ports:
