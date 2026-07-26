@@ -173,6 +173,21 @@ services:
     networks:
       - web
 
+  paymentservice:
+    build:
+      context: ../DummyApp.PaymentService
+      dockerfile: Dockerfile
+    env_file:
+      - ./.env
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.paymentservice.rule=Host(`paymentservice.dummy.localhost`)"
+      - "traefik.http.routers.paymentservice.entrypoints=websecure"
+      - "traefik.http.routers.paymentservice.tls=true"
+      - "traefik.http.services.paymentservice.loadbalancer.server.port=80"
+    networks:
+      - web
+
   frontend:
     build:
       context: ../DummyApp.FE/dummyappfe
