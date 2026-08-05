@@ -67,6 +67,13 @@
             "BaseUrl": "https://identity.dummy.localhost"
         }
     },
+    "Stripe": {
+        "SecretKey": "<stripe-secret-key>",
+        "WebhookSecret": "<stripe-webhook-secret>",
+        "SiteId": "local",
+        "SuccessUrl": "https://fe.dummy.localhost/checkout/success",
+        "CancelUrl": "https://fe.dummy.localhost/basket"
+    },
     "Infrastructure": {
         "Databases": {
             "Identity": {
