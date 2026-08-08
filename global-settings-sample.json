@@ -70,9 +70,13 @@
     "Stripe": {
         "SecretKey": "<stripe-secret-key>",
         "WebhookSecret": "<stripe-webhook-secret>",
-        "SiteId": "local",
         "SuccessUrl": "https://fe.dummy.localhost/checkout/success",
         "CancelUrl": "https://fe.dummy.localhost/basket"
+    },
+    "Application__SiteId": "local",
+    "ServiceBus": {
+        "ConnectionString": "<service-bus-connection-string>",
+        "PaymentEventsQueueName": "payment-events"
     },
     "Infrastructure": {
         "Databases": {
