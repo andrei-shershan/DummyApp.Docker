@@ -70,7 +70,7 @@
     "Stripe": {
         "SecretKey": "<stripe-secret-key>",
         "WebhookSecret": "<stripe-webhook-secret>",
-        "SuccessUrl": "https://fe.dummy.localhost/checkout/success",
+        "SuccessUrl": "https://fe.dummy.localhost/orders",
         "CancelUrl": "https://fe.dummy.localhost/basket"
     },
     "Application__SiteId": "local",
