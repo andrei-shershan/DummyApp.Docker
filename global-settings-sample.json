@@ -168,6 +168,12 @@
     {
         "SecretKey": "123123"
     },
+    "EmailServiceOptions": {
+        "ConnectionString": "<your-communication-service-connection-string>",
+        "SenderAddress": "<your-verified-sender-email>",
+        "SenderDisplayName": "DummyApp Email Service",
+        "RecipientAddress": "<recipient-email>"
+    },
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "Logging": {
         "LogLevel": {
