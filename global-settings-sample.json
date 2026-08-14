@@ -173,6 +173,9 @@
         "SenderAddress": "<your-verified-sender-email>",
         "SenderDisplayName": "DummyApp Email Service",
     },
+    "FileService": {
+        "SecretKey": "123123"
+    },
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "Logging": {
         "LogLevel": {
