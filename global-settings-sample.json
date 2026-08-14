@@ -172,7 +172,6 @@
         "ConnectionString": "<your-communication-service-connection-string>",
         "SenderAddress": "<your-verified-sender-email>",
         "SenderDisplayName": "DummyApp Email Service",
-        "RecipientAddress": "<recipient-email>"
     },
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "Logging": {
