@@ -76,7 +76,8 @@
     "Application__SiteId": "local",
     "ServiceBus": {
         "ConnectionString": "<service-bus-connection-string>",
-        "PaymentEventsQueueName": "payment-events"
+        "PaymentEventsQueueName": "payment-events",
+        "CompletedOrderEventsQueueName": "completed-order-events"
     },
     "Infrastructure": {
         "Databases": {
