@@ -184,5 +184,6 @@
             "Microsoft.AspNetCore": "Warning"
         }
     },
+    "OrderQRCode": "test",
     "AllowedHosts": "*"
 }
