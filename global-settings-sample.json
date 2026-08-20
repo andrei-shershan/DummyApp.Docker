@@ -65,6 +65,9 @@
         },
         "IdentityService": {
             "BaseUrl": "https://identity.dummy.localhost"
+        },
+        "FileService": {
+            "BaseUrl": "https://fileservice.dummy.localhost"
         }
     },
     "Stripe": {
