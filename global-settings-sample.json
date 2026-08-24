@@ -164,7 +164,6 @@
     },
     "BlobStorage": {
         "ConnectionString": "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNoGVdrW1Z4+DA3Gg9rb+v3pQ+uK2Z0FY=;BlobEndpoint=http://azurite:10000/devstoreaccount1;",
-        "ContainerName": "artworks",
         "StorageUrl": "http://localhost:10000/devstoreaccount1",
         "SecretKey": "123123"
     },
