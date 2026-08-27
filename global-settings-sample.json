@@ -68,6 +68,9 @@
         },
         "FileService": {
             "BaseUrl": "https://fileservice.dummy.localhost"
+        },
+        "AnalyticsService": {
+            "BaseUrl": "https://analyticsservice.dummy.localhost"
         }
     },
     "Stripe": {
