@@ -70,7 +70,7 @@
             "BaseUrl": "https://fileservice.dummy.localhost"
         },
         "AnalyticsService": {
-            "BaseUrl": "https://analyticsservice.dummy.localhost"
+            "BaseUrl": "https://analytics.dummy.localhost"
         }
     },
     "Stripe": {
@@ -190,5 +190,8 @@
         }
     },
     "OrderQRCode": "test",
-    "AllowedHosts": "*"
+    "AllowedHosts": "*",
+    "CosmosDb": {
+        "ConnectionString": "<your-cosmos-db-connection-string>"
+    }
 }
