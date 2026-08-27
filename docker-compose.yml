@@ -33,6 +33,7 @@ services:
           - blobservice.dummy.localhost
           - emailservice.dummy.localhost
           - fileservice.dummy.localhost
+          - paymentservice.dummy.localhost
           - analytics.dummy.localhost
 
   mysql:
